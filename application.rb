@@ -1,4 +1,5 @@
 require "action_controller/railtie"
+require "logjam_agent/railtie"
 
 class TestApp < Rails::Application
   secrets.secret_token    = "secret_token"
@@ -7,10 +8,12 @@ class TestApp < Rails::Application
   config.logger = Logger.new($stdout)
   Rails.logger = config.logger
 
-  routes.draw do
+  routes.append do
     root "home#index"
   end
 end
+
+Rails.application.initialize!
 
 class HomeController < ActionController::Base
   def index
